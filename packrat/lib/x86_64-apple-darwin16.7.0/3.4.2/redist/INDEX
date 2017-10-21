@@ -1,0 +1,25 @@
+algdat.p10              All Partitions of 25 Precincts into 3
+                        Congressional Districts (10% Population
+                        Constraint)
+algdat.p20              All Partitions of 25 Precincts into 3
+                        Congressional Districts (20% Population
+                        Constraint)
+algdat.pfull            All Partitions of 25 Precincts into 3
+                        Congressional Districts (No Population
+                        Constraint)
+redist-package          Markov Chain Monte Carlo Methods for
+                        Redistricting Simulation
+redist.combine          Combine successive runs of 'redist.mcmc'
+redist.combine.mpi      Combine successive runs of 'redist.mcmc.mpi'
+redist.diagplot         Diagnostic plotting functionality for MCMC
+                        redistricting.
+redist.enumerate        Exact Redistricting Plan Enumerator
+redist.findparams       Run parameter testing for 'redist.mcmc'
+redist.ipw              Inverse probability reweighting for MCMC
+                        Redistricting
+redist.mcmc             MCMC Redistricting Simulator
+redist.mcmc.mpi         MCMC Redistricting Simulator using MPI
+redist.rsg              Redistricting via Random Seed and Grow
+                        Algorithm
+redist.segcalc          Segregation index calculation for MCMC
+                        redistricting.
