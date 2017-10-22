@@ -2,50 +2,62 @@ library("redist")
 library("spdep")
 library("rgdal")
 library("ggplot2")
-library("sf")
+#library("sf")
 
-#data<-readOGR(dsn="./data/mcd_phl_cartogram.shp")
-#slotNames(data)
-#slotNames(data@polygons[[1]])
+NUM_DISTRICTS <- 18
 
-cd <- st_read("./data/mcd_phl_cartogram.shp", stringsAsFactors = FALSE)
-head(cd)
+data<-readOGR(dsn="./data/mcd_phl_cartogram.shp")
+slotNames(data)
 
 
+slotNames(data@polygons[[1]])
+
+data@data
 
 
-data$rn <- row.names(data)
+# paste(data@data$McdName, data@data$Lv3Name)
 
-plot()
 
-#plot(data)
 
 # redist.rsg(adj.list, population, ndists, thresh, verbose = TRUE, maxiter=5000)
 
+set.seed(1)
 
+params <- expand.grid(eprob = c(.01, .05, .1))
+
+# redist.findparams(
+#    adjobj=data,
+#    popvec=data@data$TotPop,
+#    nsims=10000,
+#    params = params,
+#    ndists = NUM_DISTRICTS
+# )
+
+# redist.rsg(adj.list=data,
+#            population=data@data$TotPop,
+#            ndists=NUM_DISTRICTS,
+#            thresh=0.10,
+#            verbose = TRUE,
+#            maxiter=500000)
 
 redist.mcmc(
-    adjobj,
-    popvec,
-    nsims,
-    ndists = 18,
-    initcds = NULL,
-    loopscompleted = 0,
-    nloop = 1,
-    nthin = 1, eprob = 0.05, lambda = 0,
-popcons = NULL, grouppopvec = NULL, ssdmat = NULL,
-beta = 0, temper = "none", constraint = "none",
-betaseq = "powerlaw", betaseqlength = 10,
-betaweights = NULL,
-adjswaps = TRUE, rngseed = NULL, maxiterrsg = 5000,
-adapt_lambda = FALSE, adapt_eprob = FALSE,
-contiguitymap = "rooks", exact_mh = FALSE, savename = NULL, verbose = TRUE)
+    adjobj=data,
+    popvec=data@data$TotPop,
+    nsims=100,
+    ndists = NUM_DISTRICTS,
+    maxiterrsg = 1000000,
+    popcons = 0.1,
+    initcds = NULL, loopscompleted = 0, nloop = 1, nthin = 1, eprob = 0.05, lambda = 0,
+    grouppopvec = NULL, ssdmat = NULL, beta = 0, temper = "none", adjswaps = TRUE,
+    rngseed = NULL, adapt_lambda = FALSE, adapt_eprob = FALSE,
+    contiguitymap = "rooks", exact_mh = FALSE, savename = NULL, verbose = TRUE)
+
+
 
 
 
 data(algdat.pfull)
 
-set.seed(1)
 initcds <- algdat.pfull$cdmat[,sample(1:ncol(algdat.pfull$cdmat), 1)]
 
 ## Run the algorithm
